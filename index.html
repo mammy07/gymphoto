@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gymnastics Video Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f12;
+    --surface: #18181f;
+    --surface2: #21212c;
+    --border: #2e2e3d;
+    --accent: #7ee8a2;
+    --accent2: #5bc4f5;
+    --warn: #f5a623;
+    --danger: #ff6b6b;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --lens-tele: #a78bfa;
+    --lens-med: #5bc4f5;
+    --lens-wide: #7ee8a2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    padding: 18px 24px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: var(--surface);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--accent);
+  }
+  .logo span { color: var(--text); }
+  .save-indicator {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 6px;
+  }
+  .tab-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .tab-btn.active {
+    background: var(--accent);
+    color: #0f0f12;
+    border-color: var(--accent);
+    font-weight: 500;
+  }
+  .tab-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+  /* MEET DAY BANNER */
+  .meet-banner {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .meet-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--warn);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .meet-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed var(--border);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 2px 6px;
+    outline: none;
+    min-width: 140px;
+    flex: 1;
+  }
+  .meet-input::placeholder { color: var(--muted); }
+  .meet-input:focus { border-color: var(--accent); }
+  .meet-sep { color: var(--border); }
+
+  /* MAIN LAYOUT */
+  main {
+    padding: 16px 24px 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  /* EVENT CARD */
+  .event-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .event-card:hover { border-color: #3e3e52; }
+
+  .card-header {
+    padding: 12px 14px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+  }
+  .event-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .event-icon { font-size: 16px; }
+
+  .card-body { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+
+  /* INLINE SELECTS ROW */
+  .selects-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .select-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    min-width: 100px;
+  }
+  .select-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    padding: 5px 8px;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  select:focus { border-color: var(--accent); }
+  select.lens-tele { border-left: 2px solid var(--lens-tele); }
+  select.lens-med  { border-left: 2px solid var(--lens-med); }
+  select.lens-wide { border-left: 2px solid var(--lens-wide); }
+
+  /* ZONES SECTION */
+  .zones-section {}
+  .section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .zone-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .zone-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    text-align: left;
+    padding: 3px 6px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+  .zone-table td {
+    padding: 4px 6px;
+    border-bottom: 1px solid #1e1e28;
+    vertical-align: top;
+  }
+  .zone-table tr:last-child td { border-bottom: none; }
+  .athlete-name { font-weight: 500; color: var(--text); }
+  .zone-badge {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    font-weight: 500;
+  }
+  .zone-note { color: var(--muted); font-size: 11px; }
+  .athlete-name-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed transparent;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    outline: none;
+    width: 100%;
+    padding: 1px 2px;
+    transition: border-color 0.15s;
+  }
+  .athlete-name-input:hover, .athlete-name-input:focus {
+    border-bottom-color: var(--border);
+  }
+  .athlete-name-input:focus { border-bottom-color: var(--accent); }
+  .zone-input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--accent2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    outline: none;
+    width: 36px;
+    padding: 1px 4px;
+    text-align: center;
+    transition: border-color 0.15s;
+  }
+  .zone-input:focus { border-color: var(--accent2); }
+  .zone-note-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    outline: none;
+    width: 100%;
+    padding: 1px 2px;
+    transition: border-color 0.15s;
+  }
+  .zone-note-input:hover, .zone-note-input:focus { border-bottom-color: var(--border); }
+  .zone-note-input:focus { border-bottom-color: var(--accent); color: var(--text); }
+
+  /* QUICK NOTES */
+  .quick-notes {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .note-item {
+    display: flex;
+    gap: 7px;
+    align-items: flex-start;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #c0c0d0;
+  }
+  .note-dot { color: var(--accent); margin-top: 1px; flex-shrink: 0; font-size: 10px; }
+  .note-warn .note-dot { color: var(--danger); }
+  .note-caution .note-dot { color: var(--warn); }
+
+  /* TABS CONTENT */
+  .gym-tab { display: none; }
+  .gym-tab.active { display: contents; }
+
+  /* LENS LEGEND */
+  .lens-legend {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .legend-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .legend-items { display: flex; gap: 14px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* OVERRIDE NOTES AREA */
+  .override-card {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border: 1px solid var(--warn);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .override-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--warn);
+    white-space: nowrap;
+    margin-top: 3px;
+  }
+  textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed var(--border);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    resize: none;
+    min-width: 200px;
+    min-height: 36px;
+    line-height: 1.5;
+  }
+  textarea::placeholder { color: var(--muted); }
+
+  /* ORIENTATION BADGE */
+  .orient-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .orient-port { background: #2d2040; color: #c084fc; border: 1px solid #4a3060; }
+  .orient-land { background: #1a2e40; color: var(--accent2); border: 1px solid #2a4560; }
+
+  @media (max-width: 600px) {
+    main { padding: 12px; gap: 10px; }
+    header { padding: 12px 16px; }
+    .meet-banner { padding: 8px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">GYM<span>CAM</span> · Cheat Sheet</div>
+  <span class="save-indicator" id="save-indicator">✓ saved</span>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('upstairs')">⬆ Upstairs Gym</button>
+    <button class="tab-btn" onclick="switchTab('biester')">📍 Biester Gym</button>
+  </div>
+</header>
+
+<div class="meet-banner">
+  <span class="meet-label">Meet Day</span>
+  <input class="meet-input" placeholder="Meet name / location" style="max-width:180px">
+  <span class="meet-sep">·</span>
+  <input class="meet-input" type="date" style="max-width:140px; color-scheme: dark;">
+  <span class="meet-sep">·</span>
+  <span class="meet-label">Rotation Order</span>
+  <input class="meet-input" placeholder="e.g. Floor → PH → Rings → Vault → PBars → HBar">
+</div>
+
+<main id="main-grid">
+
+  <!-- ═══════════════════════════════════════ UPSTAIRS TAB ═══════════════════════════════ -->
+  <div class="gym-tab active" id="tab-upstairs">
+
+    <!-- OVERRIDE -->
+    <div class="override-card">
+      <span class="override-label">⚡ Today's<br>Overrides</span>
+      <textarea placeholder="Zone changes, special focus, lighting issues, anything different from defaults..."></textarea>
+    </div>
+
+    <!-- LENS LEGEND -->
+    <div class="lens-legend">
+      <span class="legend-title">Lens Key</span>
+      <div class="legend-items">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lens-tele)"></div> 70–200mm Telephoto</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lens-med)"></div> 24–105mm Medium</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lens-wide)"></div> 10–14mm Wide</div>
+      </div>
+    </div>
+
+    <!-- FLOOR -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">🟩</span> Floor</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select id="up-floor-lens" onchange="updateLensStyle(this)">
+              <option value="med">24–105mm Medium</option>
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>4K 60fps</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Upstairs</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="I" maxlength="3"></td><td><input class="zone-note-input" value="Default corner" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="I" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="G" maxlength="3"></td><td><input class="zone-note-input" value="Move for tumbling diagonal" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="G" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="I" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="F" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Judges at floor diagonal — stay off that line (pink zones)</div>
+          <div class="note-item"><span class="note-dot">●</span> Start recording before athlete steps onto floor</div>
+          <div class="note-item note-caution"><span class="note-dot">●</span> Lighting: back to seating side for best exposure</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POMMEL HORSE -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">🐴</span> Pommel Horse</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="med">24–105mm Medium</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>4K 60fps</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Upstairs</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="D" maxlength="3"></td><td><input class="zone-note-input" value="Side angle preferred" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="D" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="C" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="C" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="E" maxlength="3"></td><td><input class="zone-note-input" value="Between PH & PBars" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="D" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Judge sits above apparatus — avoid their sightline (D zone front edge)</div>
+          <div class="note-item"><span class="note-dot">●</span> Side-on angle shows full circular swings</div>
+          <div class="note-item"><span class="note-dot">●</span> Watch for fast dismount — stay zoomed out slightly</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RINGS -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">⭕</span> Still Rings</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="med">24–105mm Medium</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>4K 60fps</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Upstairs</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="A" maxlength="3"></td><td><input class="zone-note-input" value="Front-on portrait" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="A" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="A" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="A" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="A" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="A" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Spotter always under rings — frame to the side to minimize them</div>
+          <div class="note-item"><span class="note-dot">●</span> Portrait mode — capture full hang from rings to feet</div>
+          <div class="note-item note-caution"><span class="note-dot">●</span> Overhead lights = backlight risk. Position with light at your back</div>
+          <div class="note-item"><span class="note-dot">●</span> Switch to FHD 120fps for dismount landing</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARALLEL BARS -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">⟰</span> Parallel Bars</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="med">24–105mm Medium</option>
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>4K 60fps</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Upstairs</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="K" maxlength="3"></td><td><input class="zone-note-input" value="Side angle" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="K" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="J" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="J" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="E" maxlength="3"></td><td><input class="zone-note-input" value="Between PBars & PH" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="K" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Judge sightline from left side — use J or K, not directly behind judge</div>
+          <div class="note-item"><span class="note-dot">●</span> Side angle shows full swing amplitude best</div>
+          <div class="note-item"><span class="note-dot">●</span> Coach may step in for dismount — be ready to reframe</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIGH BAR -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">🎯</span> High Bar</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="med">24–105mm Medium</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>FHD 120fps</option>
+              <option>4K 60fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Upstairs</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="F" maxlength="3"></td><td><input class="zone-note-input" value="Right side" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="F" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="K" maxlength="3"></td><td><input class="zone-note-input" value="Left side" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="K" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="F" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="F" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Pink zones surround high bar — F and K are your only safe spots</div>
+          <div class="note-item"><span class="note-dot">●</span> Don't zoom too tight — you'll lose athlete at top of giant</div>
+          <div class="note-item"><span class="note-dot">●</span> FHD 120fps for release moves if highlight clips are the goal</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VAULT -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">🏃</span> Vault</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="med">24–105mm Medium</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+              <option>4K 60fps</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Upstairs</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="H" maxlength="3"></td><td><input class="zone-note-input" value="Far end, side angle" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="H" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="G" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="G" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="H" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="G" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> NEVER stand at the end of the runway — safety hazard</div>
+          <div class="note-item note-warn"><span class="note-dot">●</span> Red zone runs the full right wall — H and G only</div>
+          <div class="note-item"><span class="note-dot">●</span> Start recording at top of run — vault is 2 seconds total</div>
+          <div class="note-item note-caution"><span class="note-dot">●</span> FHD 120fps strongly preferred — too fast for 4K 60 to review well</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end upstairs tab -->
+
+  <!-- ═══════════════════════════════════════ BIESTER TAB ═══════════════════════════════ -->
+  <div class="gym-tab" id="tab-biester">
+
+    <div class="override-card">
+      <span class="override-label">⚡ Today's<br>Overrides</span>
+      <textarea placeholder="Zone changes, special focus, lighting issues, anything different from defaults..."></textarea>
+    </div>
+
+    <div class="lens-legend">
+      <span class="legend-title">Lens Key</span>
+      <div class="legend-items">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lens-tele)"></div> 70–200mm Telephoto</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lens-med)"></div> 24–105mm Medium</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lens-wide)"></div> 10–14mm Wide</div>
+      </div>
+    </div>
+
+    <!-- FLOOR - BIESTER -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">🟩</span> Floor</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="med">24–105mm Medium</option>
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>4K 60fps</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Biester</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="B" maxlength="3"></td><td><input class="zone-note-input" value="Audience side" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="C" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="B" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="C" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="B" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="C" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Judge sightline runs from floor right side — B and C are safe</div>
+          <div class="note-item note-caution"><span class="note-dot">●</span> Arena lighting harsher here — expose for athlete's face</div>
+          <div class="note-item"><span class="note-dot">●</span> Audience to left — don't block their view while moving</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POMMEL - BIESTER -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">🐴</span> Pommel Horse</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="med">24–105mm Medium</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>4K 60fps</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Biester</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="A" maxlength="3"></td><td><input class="zone-note-input" value="Far left corner" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="P" maxlength="3"></td><td><input class="zone-note-input" value="Below, angled" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="N" maxlength="3"></td><td><input class="zone-note-input" value="Right side" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="O" maxlength="3"></td><td><input class="zone-note-input" value="Below right" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="A" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="P" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Judge sits directly above horse — avoid front sightline</div>
+          <div class="note-item"><span class="note-dot">●</span> A, N, O, P all valid — pick based on rotation order</div>
+          <div class="note-item"><span class="note-dot">●</span> Pommel is bottom-left here — further from vault, plan movement</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RINGS - BIESTER -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">⭕</span> Still Rings</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="med">24–105mm Medium</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>4K 60fps</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Biester</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="D" maxlength="3"></td><td><input class="zone-note-input" value="Left side" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="E" maxlength="3"></td><td><input class="zone-note-input" value="Right side front" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="D" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="E" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="D" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="D" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Judge zone runs below and right of rings — D and E only</div>
+          <div class="note-item"><span class="note-dot">●</span> Portrait — full vertical from rings to landing mat</div>
+          <div class="note-item note-caution"><span class="note-dot">●</span> Spotter always present — frame slightly off-center to minimize</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P BARS - BIESTER -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">⟰</span> Parallel Bars</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="med">24–105mm Medium</option>
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>4K 60fps</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Biester</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="K" maxlength="3"></td><td><input class="zone-note-input" value="Above bars" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="L" maxlength="3"></td><td><input class="zone-note-input" value="Below bars" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="K" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="L" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="K" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="L" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Judge left side — K and L are clear, avoid left edge of K</div>
+          <div class="note-item"><span class="note-dot">●</span> P Bars center-right here — good distance from floor and rings</div>
+          <div class="note-item"><span class="note-dot">●</span> Side angle from K for best swing coverage</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIGH BAR - BIESTER -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">🎯</span> High Bar</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="med">24–105mm Medium</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>FHD 120fps</option>
+              <option>4K 60fps</option>
+              <option>FHD 240fps</option>
+            </select>
+          </div>
+        </div>
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Biester</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="H" maxlength="3"></td><td><input class="zone-note-input" value="Below bar left" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="I" maxlength="3"></td><td><input class="zone-note-input" value="Below bar right" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="J" maxlength="3"></td><td><input class="zone-note-input" value="Right front" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="H" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="I" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="H" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> Large pink zones both sides — H, I, J are the only clear spots</div>
+          <div class="note-item"><span class="note-dot">●</span> Don't zoom tight — giant swings go well above bar</div>
+          <div class="note-item"><span class="note-dot">●</span> FHD 120fps for release moves — catch + re-catch is fast</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VAULT - BIESTER -->
+    <div class="event-card">
+      <div class="card-header">
+        <div class="event-name"><span class="event-icon">🏃</span> Vault</div>
+        <span class="orient-badge orient-port">PORTRAIT</span>
+      </div>
+      <div class="card-body">
+        <div class="selects-row">
+          <div class="select-group">
+            <span class="select-label">Lens</span>
+            <select onchange="updateLensStyle(this)">
+              <option value="tele">70–200mm Telephoto</option>
+              <option value="med">24–105mm Medium</option>
+              <option value="wide">10–14mm Wide</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <span class="select-label">Settings</span>
+            <select>
+              <option>4K 60fps Portrait</option>
+              <option>FHD 120fps</option>
+              <option>FHD 240fps</option>
+              <option>4K 60fps</option>
+            </select>
+          </div>
+        </div>
+        <div class="zones-section">
+          <div class="section-title">📍 Zones — Biester</div>
+          <table class="zone-table">
+            <tr><th>Athlete</th><th>Zone</th><th>Notes</th></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete A" placeholder="Athlete name"></td><td><input class="zone-input" value="F" maxlength="3"></td><td><input class="zone-note-input" value="Top right" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete B" placeholder="Athlete name"></td><td><input class="zone-input" value="G" maxlength="3"></td><td><input class="zone-note-input" value="Far right" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete C" placeholder="Athlete name"></td><td><input class="zone-input" value="F" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete D" placeholder="Athlete name"></td><td><input class="zone-input" value="M" maxlength="3"></td><td><input class="zone-note-input" value="Bottom of runway" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete E" placeholder="Athlete name"></td><td><input class="zone-input" value="F" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+            <tr><td><input class="athlete-name-input" value="Athlete F" placeholder="Athlete name"></td><td><input class="zone-input" value="G" maxlength="3"></td><td><input class="zone-note-input" value="" placeholder="note..."></td></tr>
+          </table>
+        </div>
+        <div class="quick-notes">
+          <div class="note-item note-warn"><span class="note-dot">●</span> NEVER stand at the end of runway (right wall red zone)</div>
+          <div class="note-item note-warn"><span class="note-dot">●</span> Large red zone right side — F, G, M only (away from runway)</div>
+          <div class="note-item"><span class="note-dot">●</span> Start recording at top of run — it's over in 2 seconds</div>
+          <div class="note-item note-caution"><span class="note-dot">●</span> Athletes area is right side — be aware and stay out of their path</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end biester tab -->
+
+</main>
+
+<script>
+  // ── TAB SWITCHING ──────────────────────────────────────────────
+  function switchTab(gym) {
+    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', (i === 0 && gym === 'upstairs') || (i === 1 && gym === 'biester'));
+    });
+    document.getElementById('tab-upstairs').classList.toggle('active', gym === 'upstairs');
+    document.getElementById('tab-biester').classList.toggle('active', gym === 'biester');
+    localStorage.setItem('activeTab', gym);
+  }
+
+  // ── LENS COLOR ─────────────────────────────────────────────────
+  function updateLensStyle(sel) {
+    const val = sel.value;
+    sel.className = '';
+    if (val === 'tele') sel.classList.add('lens-tele');
+    else if (val === 'med') sel.classList.add('lens-med');
+    else if (val === 'wide') sel.classList.add('lens-wide');
+  }
+
+  // ── SAVE INDICATOR ─────────────────────────────────────────────
+  function showSaved() {
+    const el = document.getElementById('save-indicator');
+    el.style.opacity = '1';
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.style.opacity = '0', 1500);
+  }
+
+  // ── SAVE ALL STATE ─────────────────────────────────────────────
+  function saveAll() {
+    const state = {};
+
+    // Meet banner inputs
+    document.querySelectorAll('.meet-input').forEach((el, i) => {
+      state['meet-' + i] = el.value;
+    });
+
+    // All selects (lens + settings)
+    document.querySelectorAll('select').forEach((el, i) => {
+      state['select-' + i] = el.value;
+    });
+
+    // All textareas (overrides)
+    document.querySelectorAll('textarea').forEach((el, i) => {
+      state['textarea-' + i] = el.value;
+    });
+
+    // Editable athlete names
+    document.querySelectorAll('.athlete-name-input').forEach((el, i) => {
+      state['athlete-' + i] = el.value;
+    });
+
+    // Zone inputs
+    document.querySelectorAll('.zone-input').forEach((el, i) => {
+      state['zone-' + i] = el.value;
+    });
+
+    // Zone note inputs
+    document.querySelectorAll('.zone-note-input').forEach((el, i) => {
+      state['zonenote-' + i] = el.value;
+    });
+
+    localStorage.setItem('gymcam-state', JSON.stringify(state));
+    showSaved();
+  }
+
+  // ── RESTORE ALL STATE ──────────────────────────────────────────
+  function restoreAll() {
+    const raw = localStorage.getItem('gymcam-state');
+    if (!raw) return;
+    const state = JSON.parse(raw);
+
+    document.querySelectorAll('.meet-input').forEach((el, i) => {
+      if (state['meet-' + i] !== undefined) el.value = state['meet-' + i];
+    });
+
+    document.querySelectorAll('select').forEach((el, i) => {
+      if (state['select-' + i] !== undefined) {
+        el.value = state['select-' + i];
+        updateLensStyle(el);
+      }
+    });
+
+    document.querySelectorAll('textarea').forEach((el, i) => {
+      if (state['textarea-' + i] !== undefined) el.value = state['textarea-' + i];
+    });
+
+    document.querySelectorAll('.athlete-name-input').forEach((el, i) => {
+      if (state['athlete-' + i] !== undefined) el.value = state['athlete-' + i];
+    });
+
+    document.querySelectorAll('.zone-input').forEach((el, i) => {
+      if (state['zone-' + i] !== undefined) el.value = state['zone-' + i];
+    });
+
+    document.querySelectorAll('.zone-note-input').forEach((el, i) => {
+      if (state['zonenote-' + i] !== undefined) el.value = state['zonenote-' + i];
+    });
+
+    // Restore active tab
+    const tab = localStorage.getItem('activeTab');
+    if (tab) switchTab(tab);
+  }
+
+  // ── INIT ───────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    restoreAll();
+
+    // Auto-save on any change
+    document.addEventListener('input', saveAll);
+    document.addEventListener('change', saveAll);
+  });
+</script>
+</body>
+</html>
